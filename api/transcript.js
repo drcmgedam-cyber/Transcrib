@@ -25,7 +25,8 @@ export default async function handler(req, res) {
 
   try {
     const supadata = new Supadata({ apiKey: process.env.SUPADATA_API_KEY });
-    const result = await supadata.transcript({ url, text: true, mode: 'auto' });
+    // Prefer English captions when the video provides them.
+    const result = await supadata.transcript({ url, text: true, mode: 'auto', lang: 'en' });
     if ('jobId' in result) return res.status(202).json({ jobId: result.jobId, status: 'processing' });
     const transcript = plainText(result.content);
     if (!transcript) return res.status(422).json({ error: 'The transcript provider returned no readable transcript for this video.' });
