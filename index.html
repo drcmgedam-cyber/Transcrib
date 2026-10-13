@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#f7f8f5">
+  <meta name="description" content="Turn YouTube videos into transcripts, clear notes, and visual mind maps."><title>Framewise — learn more from every video</title>
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+  <div class="shell">
+    <aside class="sidebar">
+      <a class="brand" href="/"><span class="brandmark">▶</span>framewise</a>
+      <button class="new-button" id="newButton">＋ &nbsp;New notes</button>
+      <div class="side-label">Workspace</div>
+      <button class="nav active" data-view="home"><span>⌂</span>Overview</button>
+      <button class="nav" data-view="library"><span>▤</span>My library <span class="count" id="libraryCount">0</span></button>
+      <div class="sidebar-bottom"><div class="tip"><b>A little learning, often.</b><p>Your notes stay on this device, in this browser.</p></div><div class="profile"><span class="avatar">F</span><div><b>Personal workspace</b><small>Private library</small></div></div></div>
+    </aside>
+    <main>
+      <header class="topbar"><div class="breadcrumb">Workspace <span>/</span> <b id="crumb">Overview</b></div><button class="help-button" id="helpButton" title="How it works">? <span>How it works</span></button></header>
+      <div class="content">
+        <section id="homeView">
+          <div class="hero-row"><div><div class="eyebrow"><i></i> Your video learning space</div><h1>Make every video<br>stay with you.</h1><p class="intro">Turn YouTube videos into clear notes, useful ideas, and visuals you’ll remember.</p></div><button class="sample-button" id="sampleButton">✦ &nbsp;Explore a sample</button></div>
+          <div class="input-card">
+            <div class="card-heading"><b>Start with a YouTube video</b><span>One link is all it takes</span></div>
+            <div class="url-row"><span class="url-icon">▶</span><input id="videoUrl" type="url" placeholder="Paste a YouTube link here…" autocomplete="url" aria-label="YouTube video URL"><button class="primary" id="urlAnalyze">Get my notes <span>→</span></button></div>
+            <div class="input-foot"><span>Public videos with available captions are supported.</span><button id="pasteToggle">Already have a transcript? <b>Paste it here ↓</b></button></div>
+            <div class="paste-area" id="pasteArea"><textarea id="transcriptInput" placeholder="Paste transcript text here…" aria-label="Paste transcript"></textarea><div class="paste-actions"><span>At least a few sentences work best.</span><button class="primary" id="textAnalyze">Create notes →</button></div></div>
+          </div>
+          <div class="trust-note"><span>ⓘ</span> Captions may be unavailable for private, restricted, or caption-free videos.</div>
+          <div class="section-heading"><div><h2>Recently learned</h2><p>Your ideas, ready when you need them.</p></div><button class="text-button" id="seeLibrary">View library →</button></div>
+          <div class="library-grid" id="recentGrid"></div>
+          <div class="empty-state" id="emptyRecent"><div class="empty-icon">✳</div><b>Your next good idea starts here.</b><p>Add a video to make your first set of notes.</p></div>
+          <div class="features"><div><span>▤</span><b>Readable transcripts</b><small>Revisit what was said.</small></div><div><span>✦</span><b>Ideas at a glance</b><small>Takeaways, learnings, and maps.</small></div><div><span>↗</span><b>Made to remember</b><small>Copy, save, and export your notes.</small></div></div>
+        </section>
+        <section id="libraryView" class="hidden"><div class="library-top"><div><div class="eyebrow"><i></i> Your collection</div><h1 class="small-title">My library</h1><p class="intro">Every video you’ve turned into something useful.</p></div><label class="search"><span>⌕</span><input id="searchInput" placeholder="Search saved notes…"></label></div><div class="library-grid" id="libraryGrid"></div><div class="empty-state" id="emptyLibrary"><div class="empty-icon">▤</div><b>No saved notes yet.</b><p>Analyze a video and save the notes you want to keep.</p><button class="primary" id="startFirst">Add a video →</button></div></section>
+        <section id="notesView" class="notes hidden">
+          <div class="notes-top"><div><button id="backButton" class="back-button">← &nbsp;Back</button><div class="eyebrow"><i></i> Your video notes</div><h1 class="notes-title" id="notesTitle">Video notes</h1><a class="source-link" id="sourceLink" target="_blank" rel="noopener noreferrer"></a></div><div class="notes-actions"><button class="outline-button" id="copyButton">Copy notes</button><button class="outline-button" id="saveButton">♡ Save</button><button class="primary" id="exportButton">Export ↓</button></div></div>
+          <div class="note-tabs" role="tablist"><button class="tab active" data-tab="summary">Summary</button><button class="tab" data-tab="takeaways">Key takeaways</button><button class="tab" data-tab="learnings">Learnings</button><button class="tab" data-tab="transcript">Transcript</button><button class="tab" data-tab="mindmap">Mind map</button><button class="tab" data-tab="infographic">Infographic</button></div>
+          <div class="notes-panel active" id="panel-summary"><div class="summary-card"><div class="panel-label">THE BIG PICTURE</div><p id="summaryText"></p><div class="topic-pills" id="topicPills"></div></div><div class="source-caption">Generated from the video transcript. Check the transcript tab for the source text.</div></div>
+          <div class="notes-panel" id="panel-takeaways"><div class="panel-label">THE IDEAS WORTH KEEPING</div><ol class="idea-list" id="takeawaysList"></ol></div>
+          <div class="notes-panel" id="panel-learnings"><div class="panel-label">WHAT YOU CAN PUT INTO PRACTICE</div><ol class="idea-list" id="learningsList"></ol></div>
+          <div class="notes-panel" id="panel-transcript"><div class="panel-label transcript-label">VIDEO TRANSCRIPT <button class="text-button" id="copyTranscript">Copy transcript</button></div><pre class="transcript-text" id="transcriptText"></pre></div>
+          <div class="notes-panel" id="panel-mindmap"><div class="panel-label">THE TOPIC, IN A MAP</div><div class="map-canvas" id="mapCanvas"></div><div class="source-caption">Select “Export” to save this map as an SVG image.</div></div>
+          <div class="notes-panel" id="panel-infographic"><div class="panel-label">A QUICK VISUAL RECAP</div><div class="infographic" id="infographic"></div><div class="source-caption">Download a shareable SVG poster with the Export button.</div></div>
+        </section>
+      </div>
+      <div class="toast" id="toast" role="status"></div>
+      <div class="busy" id="busy" aria-live="polite"><div class="spinner"></div><div><b id="busyTitle">Working on your notes</b><p id="busyText">This can take a moment.</p></div></div>
+      <div class="modal-shade hidden" id="passwordShade"><form class="password-modal" id="passwordForm"><div class="brand"><span class="brandmark">▶</span>framewise</div><h2>This is your private learning space.</h2><p>Enter the app password you set when deploying Framewise.</p><input id="passwordInput" type="password" autocomplete="current-password" placeholder="App password"><button class="primary">Continue →</button><small id="passwordError"></small></form></div>
+      <div class="modal-shade hidden" id="helpShade"><div class="help-modal"><button class="modal-close" id="closeHelp">×</button><div class="eyebrow"><i></i> From video to useful notes</div><h2>How Framewise works</h2><ol><li>Paste a public YouTube video link, or paste a transcript directly.</li><li>Framewise retrieves captions and creates a summary, key takeaways, learnings, and visual maps.</li><li>Save notes in your browser library or export them as text or an SVG poster.</li></ol><p class="fine-print">Notes and your library are stored in this browser. API credentials stay on the server.</p></div></div>
+    </main>
+  </div>
+  <script type="module" src="/app.js"></script>
+</body>
+</html>

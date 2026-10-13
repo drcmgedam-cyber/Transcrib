@@ -1,0 +1,11 @@
+{
+  "name": "framewise-video-notes",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "engines": { "node": ">=22" },
+  "dependencies": {
+    "@google/genai": "^2.24.0",
+    "@supadata/js": "^1.4.0"
+  }
+}
